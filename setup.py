@@ -8,7 +8,7 @@ except TypeError:
 
 setup(
     name='django-ckeditor-filer',
-    version='1.0.5',
+    version='1.1.0',
     author='Sergey Gornostaev',
     author_email='sergey@gornostaev.su',
 
@@ -29,6 +29,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Natural Language :: Russian',
