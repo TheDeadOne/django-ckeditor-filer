@@ -1,0 +1,4 @@
+include *.rst
+recursive-include ckeditor_filer/locale *
+recursive-include ckeditor_filer/migrations *
+recursive-include ckeditor_filer/static *
