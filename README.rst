@@ -40,3 +40,18 @@ $ pip install django-ckeditor-filer
       'extraPlugins': 'filer'
       }
   }
+
+Совместимость с djangocms-text-ckeditor
+=======================================
+
+CKEditor в Django CMS подключается с помощью плагина djangocms-text-ckeditor.
+Модуль можно использовать и с ним. Для этого понадобиться создать символьную
+сслыку на каталог статики плагина ::
+
+    ln -s <STATIC_ROOT>/ckeditor/ckeditor/plugins/filer/ <STATIC_ROOT>/djangocms_text_ckeditor/ckeditor/plugins/filer/
+
+Или прописать alias в конфигурации вашего web-сервера. Например для Nginx ::
+
+    location /static/djangocms_text_ckeditor/ckeditor/plugins/filer/ {
+        alias <STATIC_ROOT>/ckeditor/ckeditor/plugins/filer/;
+    }

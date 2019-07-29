@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import hashlib
 
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseForbidden
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
 from filer.models import Folder, Image
+
 
 @require_POST
 def upload_to_filer(request):
@@ -21,12 +22,14 @@ def upload_to_filer(request):
                     folder.save()
                 if request.FILES['image'].content_type:
                     if request.FILES['image'].content_type.split('/')[0] != 'image':
-                        return JsonResponse({'status': 'error', 'message': _(u'The uploaded file must be an image!')})
-                sha1 = hashlib.sha1(request.FILES['image'].read()).hexdigest()
+                        return JsonResponse({'status': 'error', 'message': _('The uploaded file must be an image!')})
+                data = request.FILES['image'].read()
+                sha1 = hashlib.sha1(data).hexdigest()  # nosec
                 img = Image.objects.filter(sha1=sha1).first()
                 if img is None:
                     img = Image.objects.create(owner=request.user, folder=folder,
-                        original_filename=request.FILES['image'].name, file=request.FILES['image'])
+                                               original_filename=request.FILES['image'].name,
+                                               file=request.FILES['image'])
                 return JsonResponse({'status': 'ok', 'url': img.url})
             else:
                 return HttpResponseForbidden('')
